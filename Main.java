@@ -27,6 +27,7 @@ public class Main
 
           Matrix matrix = new Matrix(frame);
           frame.getContentPane().add(matrix);
+          frame.getContentPane().setCursor(BlankCursor.getCursor());
           frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
           frame.setVisible(true);
 
