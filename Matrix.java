@@ -37,7 +37,7 @@ public class Matrix extends JPanel implements CollisionAvoidance
 
   private Font mainFont;
 
-  public Matrix(JFrame parent)
+  public Matrix(JFrame parent, String specialFile)
   {
     super();
 
@@ -62,7 +62,7 @@ public class Matrix extends JPanel implements CollisionAvoidance
     drop = new Drop[cols / 3];
     for (int i = 0; i < drop.length; i++)
     {
-      drop[i] = new Drop(cols, rows, model, this);
+      drop[i] = new Drop(cols, rows, model, this, specialFile);
     }
   }
 
@@ -111,7 +111,7 @@ public class Matrix extends JPanel implements CollisionAvoidance
     {
       if (drop[i].update())
       {
-        drop[i] = new Drop(cols, rows, model, this);
+        drop[i] = new Drop(cols, rows, model, this, null);
       }
     }
   }

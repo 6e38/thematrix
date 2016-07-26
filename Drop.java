@@ -41,9 +41,9 @@ public class Drop
   private boolean isSpecial;
   private int color;
 
-  public Drop(int theCols, int theRows, Model theModel, CollisionAvoidance ca)
+  public Drop(int theCols, int theRows, Model theModel, CollisionAvoidance ca, String specialFile)
   {
-    readSpecialStrings("special.txt");
+    readSpecialStrings(specialFile);
 
     updates = 0;
     cols = theCols;
@@ -157,23 +157,26 @@ public class Drop
 
   private static void readSpecialStrings(String filename)
   {
-    if (specialStrings == null)
+    if (filename != null)
     {
-      specialStrings = new ArrayList<String>();
-
-      try
+      if (specialStrings == null)
       {
-        File file = new File(filename);
-        BufferedReader reader = new BufferedReader(new FileReader(file));
+        specialStrings = new ArrayList<String>();
 
-        for (String line = reader.readLine(); line != null; line = reader.readLine())
+        try
         {
-          specialStrings.add(line);
+          File file = new File(filename);
+          BufferedReader reader = new BufferedReader(new FileReader(file));
+
+          for (String line = reader.readLine(); line != null; line = reader.readLine())
+          {
+            specialStrings.add(line);
+          }
         }
-      }
-      catch (Exception e)
-      {
-        // Ignore all
+        catch (Exception e)
+        {
+          // Ignore all
+        }
       }
     }
   }

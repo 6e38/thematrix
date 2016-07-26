@@ -8,10 +8,10 @@ public class Main
 {
   public static void main(String args[])
   {
-    new Main();
+    new Main(args[0]);
   }
 
-  public Main()
+  public Main(String specialFile)
   {
     SwingUtilities.invokeLater(new Runnable() {
 
@@ -25,7 +25,7 @@ public class Main
 
           gd[0].setFullScreenWindow(frame);
 
-          Matrix matrix = new Matrix(frame);
+          Matrix matrix = new Matrix(frame, specialFile);
           frame.getContentPane().add(matrix);
           frame.getContentPane().setCursor(BlankCursor.getCursor());
           frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
