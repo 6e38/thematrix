@@ -29,9 +29,7 @@ public class Main
 
           Matrix matrix = new Matrix(frame.getWidth(), frame.getHeight());
           frame.getContentPane().add(matrix);
-          //frame.setUndecorated(true);
           frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-          //frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
           frame.setVisible(true);
 
           Thread thread = new Engine(matrix);
