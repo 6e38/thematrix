@@ -51,7 +51,7 @@ public class Drop
     model = theModel;
     index = 0;
 
-    if (!hasSpecial && specialStrings.size() > 0 && Math.random() < 0.05)
+    if (!hasSpecial && specialStrings.size() > 0 && Math.random() < 0.01)
     {
       hasSpecial = true;
       isSpecial = true;
