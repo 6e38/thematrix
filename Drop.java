@@ -50,8 +50,10 @@ public class Drop
     x = (int)(cols * Math.random());
     y = (int)(rows * Math.random());
     index = 0;
+    isSpecial = false;
+    color = Model.Green;
 
-    if (!hasSpecial && specialStrings.size() > 0 && Math.random() < 0.10)
+    if (!hasSpecial && specialStrings.size() > 0 && Math.random() < 0.05)
     {
       hasSpecial = true;
       isSpecial = true;
@@ -61,13 +63,20 @@ public class Drop
     }
     else
     {
-      isSpecial = false;
-      color = Model.Green;
-      int length = (int)(10 * Math.random()) + 5;
+      boolean blank = Math.random() < 0.50 ? true : false;
+
+      int length = (int)((rows - 3) * Math.random()) + 3;
       message = new char[length];
       for (int i = 0; i < length; ++i)
       {
-        message[i] = charset.charAt((int)(charset.length() * Math.random()));
+        if (blank)
+        {
+          message[i] = ' ';
+        }
+        else
+        {
+          message[i] = charset.charAt((int)(charset.length() * Math.random()));
+        }
       }
     }
 
@@ -84,7 +93,7 @@ public class Drop
     }
     else if (updates < duration)
     {
-      model.setChar('#', x, y);
+      model.setChar(charset.charAt((int)(charset.length() * Math.random())), x, y);
     }
     else
     {

@@ -50,8 +50,8 @@ public class Matrix extends JPanel
 
     model = new Model(cols, rows);
 
-    drop = new Drop[5];
-    for (int i = 0; i < 5; i++)
+    drop = new Drop[cols / 3];
+    for (int i = 0; i < drop.length; i++)
     {
       drop[i] = new Drop(cols, rows, model);
     }
@@ -98,7 +98,7 @@ public class Matrix extends JPanel
 
   private void update()
   {
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < drop.length; i++)
     {
       if (drop[i].update())
       {
