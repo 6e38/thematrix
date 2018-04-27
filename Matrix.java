@@ -68,15 +68,26 @@ public class Matrix extends JPanel
     g.fillRect(0, 0, width, height);
 
     g.setFont(mainFont);
-    g.setColor(Color.GREEN);
 
     char[][] data = model.getData();
+    int[][] color = model.getColors();
     int cols = data[0].length;
     int rows = data.length;
 
+    int lastColor = 0;
+
     for (int y = 0; y < rows; y++)
     {
-      g.drawChars(data[y], 0, cols, offsetX, y * charHeight + offsetY);
+      for (int x = 0; x < cols; x++)
+      {
+        if (color[y][x] != lastColor)
+        {
+          lastColor = color[y][x];
+          g.setColor(new Color(lastColor));
+        }
+
+        g.drawChars(data[y], x, 1, x * charWidth + offsetX, y * charHeight + offsetY);
+      }
     }
   }
 
