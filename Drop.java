@@ -25,6 +25,7 @@ public class Drop
     "\u00f1\u00f2\u00f3\u00f3\u00f4\u00f5\u00f6\u00f7" +
     "\u00f8\u00f9\u00fa\u00fb\u00fc\u00fd\u00fe\u00ff";
   private static ArrayList<String> specialStrings;
+  private static boolean hasSpecial = false;
 
   private int updates;
   private int x;
@@ -35,9 +36,13 @@ public class Drop
   private int duration;
   private char[] message;
   private Model model;
+  private boolean isSpecial;
+  private int color;
 
   public Drop(int theCols, int theRows, Model theModel)
   {
+    readSpecialStrings("special.txt");
+
     updates = 0;
     cols = theCols;
     rows = theRows;
@@ -45,15 +50,28 @@ public class Drop
     x = (int)(cols * Math.random());
     y = (int)(rows * Math.random());
     index = 0;
-    int length = (int)(10 * Math.random()) + 5;
-    message = new char[length];
-    for (int i = 0; i < length; ++i)
-    {
-      message[i] = charset.charAt((int)(charset.length() * Math.random()));
-    }
-    duration = (int)(50 * Math.random()) + message.length;
 
-    readSpecialStrings("special.txt");
+    if (!hasSpecial && specialStrings.size() > 0 && Math.random() < 0.10)
+    {
+      hasSpecial = true;
+      isSpecial = true;
+      color = Model.Red;
+
+      message = specialStrings.get((int)(specialStrings.size() * Math.random())).toCharArray();
+    }
+    else
+    {
+      isSpecial = false;
+      color = Model.Green;
+      int length = (int)(10 * Math.random()) + 5;
+      message = new char[length];
+      for (int i = 0; i < length; ++i)
+      {
+        message[i] = charset.charAt((int)(charset.length() * Math.random()));
+      }
+    }
+
+    duration = (int)(50 * Math.random()) + message.length;
   }
 
   public boolean update()
@@ -62,7 +80,7 @@ public class Drop
 
     if (updates < message.length)
     {
-      model.setChar(message[index++], x, y++);
+      model.setChar(message[index++], x, y++, color);
     }
     else if (updates < duration)
     {
@@ -70,6 +88,10 @@ public class Drop
     }
     else
     {
+      if (isSpecial)
+      {
+        hasSpecial = false;
+      }
       complete = true;
     }
 
@@ -97,11 +119,6 @@ public class Drop
       catch (Exception e)
       {
         // Ignore all
-      }
-
-      for (String s : specialStrings)
-      {
-        System.out.println(s);
       }
     }
   }
