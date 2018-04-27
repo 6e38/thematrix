@@ -11,7 +11,16 @@ public class Matrix extends JPanel
 {
   private static final Color[] ColorMap = {
     new Color(0xff00ff00),
-    new Color(0xffff0000),
+    new Color(0xff00f800),
+    new Color(0xff00ef00),
+    new Color(0xff00e800),
+    new Color(0xff00df00),
+    new Color(0xff00d800),
+    new Color(0xff00cf00),
+    new Color(0xff00c800),
+    new Color(0xff00bf00),
+    new Color(0xff00b800),
+    new Color(0xffee0000),
   };
 
   private int width;

@@ -50,8 +50,6 @@ public class Drop
     x = (int)(cols * Math.random());
     y = (int)(rows * Math.random());
     index = 0;
-    isSpecial = false;
-    color = Model.Green;
 
     if (!hasSpecial && specialStrings.size() > 0 && Math.random() < 0.05)
     {
@@ -63,6 +61,8 @@ public class Drop
     }
     else
     {
+      isSpecial = false;
+      color = Model.getRandomGreen();
       boolean blank = Math.random() < 0.50 ? true : false;
 
       int length = (int)((rows - 3) * Math.random()) + 3;
@@ -93,7 +93,7 @@ public class Drop
     }
     else if (updates < duration)
     {
-      model.setChar(charset.charAt((int)(charset.length() * Math.random())), x, y);
+      model.setChar(charset.charAt((int)(charset.length() * Math.random())), x, y, color);
     }
     else
     {
