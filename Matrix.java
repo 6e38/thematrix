@@ -1,20 +1,55 @@
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Matrix extends JPanel
 {
   private int width;
   private int height;
+  private int charWidth;
+  private int charHeight;
+  private int offsetX;
+  private int offsetY;
+  private int rows;
+  private int cols;
 
-  public Matrix(int theWidth, int theHeight)
+  private Model model;
+  private Drop[] drop;
+
+  private Font mainFont;
+
+  public Matrix(JFrame parent)
   {
     super();
 
-    width = theWidth;
-    height = theHeight;
+    width = parent.getWidth();
+    height = parent.getHeight();
+
+    mainFont = new Font(Font.MONOSPACED, Font.BOLD, 30);
+
+    Graphics g = parent.getGraphics();
+    g.setFont(mainFont);
+    FontMetrics metrics = g.getFontMetrics();
+    charWidth = metrics.charWidth('A');
+    charHeight = metrics.getHeight();
+
+    cols = width / charWidth;
+    rows = height / charHeight;
+    offsetX = (width % charWidth) / 2;
+    offsetY = (height % charHeight) / 2 + metrics.getAscent();
+
+    model = new Model(cols, rows);
+
+    drop = new Drop[5];
+    for (int i = 0; i < 5; i++)
+    {
+      drop[i] = new Drop(cols, rows, model);
+    }
   }
 
   @Override
@@ -22,6 +57,7 @@ public class Matrix extends JPanel
   {
     super.paintComponent(g);
     Graphics2D g2d = (Graphics2D) g.create();
+    update();
     draw(g2d);
     g2d.dispose();
   }
@@ -29,9 +65,30 @@ public class Matrix extends JPanel
   private void draw(Graphics2D g)
   {
     g.setColor(Color.DARK_GRAY);
-    g.fillRect(0, 0, width - 10, height - 10);
-    g.setColor(Color.LIGHT_GRAY);
-    g.drawString("foo", 40, 40);
+    g.fillRect(0, 0, width, height);
+
+    g.setFont(mainFont);
+    g.setColor(Color.GREEN);
+
+    char[][] data = model.getData();
+    int cols = data[0].length;
+    int rows = data.length;
+
+    for (int y = 0; y < rows; y++)
+    {
+      g.drawChars(data[y], 0, cols, offsetX, y * charHeight + offsetY);
+    }
+  }
+
+  private void update()
+  {
+    for (int i = 0; i < 5; i++)
+    {
+      if (drop[i].update())
+      {
+        drop[i] = new Drop(cols, rows, model);
+      }
+    }
   }
 }
 

@@ -8,8 +8,6 @@ public class Main
 {
   public static void main(String args[])
   {
-    System.out.println("Hello Sad World");
-
     new Main();
   }
 
@@ -27,7 +25,7 @@ public class Main
 
           gd[0].setFullScreenWindow(frame);
 
-          Matrix matrix = new Matrix(frame.getWidth(), frame.getHeight());
+          Matrix matrix = new Matrix(frame);
           frame.getContentPane().add(matrix);
           frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
           frame.setVisible(true);
