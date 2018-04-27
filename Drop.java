@@ -58,6 +58,8 @@ public class Drop
       color = Model.Red;
 
       message = specialStrings.get((int)(specialStrings.size() * Math.random())).toCharArray();
+
+      duration = (int)(20 * 5 * Math.random() + 20 * 5) + message.length;
     }
     else
     {
@@ -67,20 +69,39 @@ public class Drop
 
       int length = (int)((rows - 3) * Math.random()) + 3;
       message = new char[length];
-      for (int i = 0; i < length; ++i)
-      {
-        if (blank)
-        {
-          message[i] = ' ';
-        }
-        else
-        {
-          message[i] = charset.charAt((int)(charset.length() * Math.random()));
-        }
-      }
-    }
 
-    duration = (int)(50 * Math.random()) + message.length;
+      if (blank)
+      {
+        makeBlankMessage(message);
+      }
+      else
+      {
+        makeRandomMessage(message);
+      }
+
+      duration = (int)(20 * 5 * Math.random()) + message.length;
+    }
+  }
+
+  private char getRandomChar()
+  {
+    return charset.charAt((int)(charset.length() * Math.random()));
+  }
+
+  private void makeRandomMessage(char[] m)
+  {
+    for (int i = 0; i < m.length; ++i)
+    {
+      m[i] = getRandomChar();
+    }
+  }
+
+  private void makeBlankMessage(char[] m)
+  {
+    for (int i = 0; i < m.length; ++i)
+    {
+      m[i] = ' ';
+    }
   }
 
   public boolean update()
@@ -93,15 +114,28 @@ public class Drop
     }
     else if (updates < duration)
     {
-      model.setChar(charset.charAt((int)(charset.length() * Math.random())), x, y, color);
+      if (!isSpecial)
+      {
+        model.setChar(charset.charAt((int)(charset.length() * Math.random())), x, y, color);
+      }
     }
     else
     {
       if (isSpecial)
       {
+        isSpecial = false;
         hasSpecial = false;
+        index = 0;
+        y -= message.length;
+        color = Model.getRandomGreen();
+        makeRandomMessage(message);
+        duration = message.length;
+        updates = -1;
       }
-      complete = true;
+      else
+      {
+        complete = true;
+      }
     }
 
     ++updates;
