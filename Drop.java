@@ -30,6 +30,8 @@ public class Drop
   private int updates;
   private int x;
   private int y;
+  private int startY;
+  private int endY;
   private int cols;
   private int rows;
   private int index;
@@ -39,7 +41,7 @@ public class Drop
   private boolean isSpecial;
   private int color;
 
-  public Drop(int theCols, int theRows, Model theModel)
+  public Drop(int theCols, int theRows, Model theModel, CollisionAvoidance ca)
   {
     readSpecialStrings("special.txt");
 
@@ -47,8 +49,6 @@ public class Drop
     cols = theCols;
     rows = theRows;
     model = theModel;
-    x = (int)(cols * Math.random());
-    y = (int)(rows * Math.random());
     index = 0;
 
     if (!hasSpecial && specialStrings.size() > 0 && Math.random() < 0.05)
@@ -81,6 +81,18 @@ public class Drop
 
       duration = (int)(20 * 5 * Math.random()) + message.length;
     }
+
+    x = (int)(cols * Math.random());
+    y = (int)(rows * Math.random());
+
+    while (ca.collides(x, y, y + message.length))
+    {
+      x = (int)(cols * Math.random());
+      y = (int)(rows * Math.random());
+    }
+
+    startY = y;
+    endY = y + message.length;
   }
 
   private char getRandomChar()
@@ -126,7 +138,7 @@ public class Drop
         isSpecial = false;
         hasSpecial = false;
         index = 0;
-        y -= message.length;
+        y = startY;
         color = Model.getRandomGreen();
         makeRandomMessage(message);
         duration = message.length;
@@ -163,6 +175,25 @@ public class Drop
       {
         // Ignore all
       }
+    }
+  }
+
+  public boolean collides(int theX, int y1, int y2)
+  {
+    if (x == theX)
+    {
+      if (y1 > endY || y2 < startY)
+      {
+        return false;
+      }
+      else
+      {
+        return true;
+      }
+    }
+    else
+    {
+      return false;
     }
   }
 }

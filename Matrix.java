@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class Matrix extends JPanel
+public class Matrix extends JPanel implements CollisionAvoidance
 {
   private static final Color[] ColorMap = {
     new Color(0xff00ff00),
@@ -44,7 +44,7 @@ public class Matrix extends JPanel
     width = parent.getWidth();
     height = parent.getHeight();
 
-    mainFont = new Font(Font.MONOSPACED, Font.BOLD, 30);
+    mainFont = new Font(Font.MONOSPACED, Font.PLAIN, 20);
 
     Graphics g = parent.getGraphics();
     g.setFont(mainFont);
@@ -62,7 +62,7 @@ public class Matrix extends JPanel
     drop = new Drop[cols / 3];
     for (int i = 0; i < drop.length; i++)
     {
-      drop[i] = new Drop(cols, rows, model);
+      drop[i] = new Drop(cols, rows, model, this);
     }
   }
 
@@ -78,7 +78,7 @@ public class Matrix extends JPanel
 
   private void draw(Graphics2D g)
   {
-    g.setColor(Color.DARK_GRAY);
+    g.setColor(Color.BLACK);
     g.fillRect(0, 0, width, height);
 
     int lastColor = Model.Green;
@@ -111,9 +111,22 @@ public class Matrix extends JPanel
     {
       if (drop[i].update())
       {
-        drop[i] = new Drop(cols, rows, model);
+        drop[i] = new Drop(cols, rows, model, this);
       }
     }
+  }
+
+  public boolean collides(int x, int y1, int y2)
+  {
+    for (Drop d : drop)
+    {
+      if (d != null && d.collides(x, y1, y2))
+      {
+        return true;
+      }
+    }
+
+    return false;
   }
 }
 
