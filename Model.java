@@ -1,7 +1,9 @@
 
 public class Model
 {
-  private static final int Green = 0xff00ff00;
+  public static final int Green = 0;
+  public static final int Red = 1;
+  private static final int MaxColors = 2;
 
   private int cols;
   private int rows;
@@ -37,7 +39,7 @@ public class Model
       y %= rows;
     }
     data[y][x] = c;
-    color[y][x] = theColor;
+    color[y][x] = theColor % MaxColors;
   }
 
   public char[][] getData()

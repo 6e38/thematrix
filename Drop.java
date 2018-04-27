@@ -1,4 +1,9 @@
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.ArrayList;
+
 public class Drop
 {
   private static final String charset =
@@ -19,6 +24,7 @@ public class Drop
     "\u00e8\u00e9\u00ea\u00eb\u00ec\u00ed\u00ee\u00ef" +
     "\u00f1\u00f2\u00f3\u00f3\u00f4\u00f5\u00f6\u00f7" +
     "\u00f8\u00f9\u00fa\u00fb\u00fc\u00fd\u00fe\u00ff";
+  private static ArrayList<String> specialStrings;
 
   private int updates;
   private int x;
@@ -46,6 +52,8 @@ public class Drop
       message[i] = charset.charAt((int)(charset.length() * Math.random()));
     }
     duration = (int)(50 * Math.random()) + message.length;
+
+    readSpecialStrings("special.txt");
   }
 
   public boolean update()
@@ -68,6 +76,34 @@ public class Drop
     ++updates;
 
     return complete;
+  }
+
+  private static void readSpecialStrings(String filename)
+  {
+    if (specialStrings == null)
+    {
+      specialStrings = new ArrayList<String>();
+
+      try
+      {
+        File file = new File(filename);
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+
+        for (String line = reader.readLine(); line != null; line = reader.readLine())
+        {
+          specialStrings.add(line);
+        }
+      }
+      catch (Exception e)
+      {
+        // Ignore all
+      }
+
+      for (String s : specialStrings)
+      {
+        System.out.println(s);
+      }
+    }
   }
 }
 

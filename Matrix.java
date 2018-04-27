@@ -9,6 +9,11 @@ import javax.swing.JPanel;
 
 public class Matrix extends JPanel
 {
+  private static final Color[] ColorMap = {
+    new Color(0xff00ff00),
+    new Color(0xffff0000),
+  };
+
   private int width;
   private int height;
   private int charWidth;
@@ -67,14 +72,14 @@ public class Matrix extends JPanel
     g.setColor(Color.DARK_GRAY);
     g.fillRect(0, 0, width, height);
 
+    int lastColor = Model.Green;
+    g.setColor(ColorMap[lastColor]);
     g.setFont(mainFont);
 
     char[][] data = model.getData();
     int[][] color = model.getColors();
     int cols = data[0].length;
     int rows = data.length;
-
-    int lastColor = 0;
 
     for (int y = 0; y < rows; y++)
     {
@@ -83,7 +88,7 @@ public class Matrix extends JPanel
         if (color[y][x] != lastColor)
         {
           lastColor = color[y][x];
-          g.setColor(new Color(lastColor));
+          g.setColor(ColorMap[lastColor]);
         }
 
         g.drawChars(data[y], x, 1, x * charWidth + offsetX, y * charHeight + offsetY);
