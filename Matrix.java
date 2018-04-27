@@ -11,15 +11,15 @@ public class Matrix extends JPanel implements CollisionAvoidance
 {
   private static final Color[] ColorMap = {
     new Color(0xff00ff00),
-    new Color(0xff00f800),
-    new Color(0xff00ef00),
-    new Color(0xff00e800),
-    new Color(0xff00df00),
-    new Color(0xff00d800),
-    new Color(0xff00cf00),
-    new Color(0xff00c800),
-    new Color(0xff00bf00),
-    new Color(0xff00b800),
+    new Color(0xff00ee00),
+    new Color(0xff00dd00),
+    new Color(0xff00cc00),
+    new Color(0xff00bb00),
+    new Color(0xff00aa00),
+    new Color(0xff009900),
+    new Color(0xff008800),
+    new Color(0xff007700),
+    new Color(0xff006600),
     new Color(0xffee0000),
   };
 
