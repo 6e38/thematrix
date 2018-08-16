@@ -11,8 +11,12 @@ public class Main
     new Main(args[0]);
   }
 
-  public Main(String specialFile)
+  private String specialFile;
+
+  public Main(String theSpecialFile)
   {
+    specialFile = theSpecialFile;
+
     SwingUtilities.invokeLater(new Runnable() {
 
         @Override
