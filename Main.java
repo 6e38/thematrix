@@ -27,6 +27,7 @@ public class Main
 
           JFrame frame = new JFrame("");
 
+          frame.setUndecorated(true);
           gd[0].setFullScreenWindow(frame);
 
           Matrix matrix = new Matrix(frame, specialFile);
