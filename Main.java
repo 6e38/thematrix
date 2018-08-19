@@ -8,7 +8,14 @@ public class Main
 {
   public static void main(String args[])
   {
-    new Main(args[0]);
+    String file = "special.txt";
+
+    if (args.length > 0)
+    {
+      file = args[0];
+    }
+
+    new Main(file);
   }
 
   private String specialFile;
