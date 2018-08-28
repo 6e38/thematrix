@@ -1,3 +1,6 @@
+/*
+ * Copyright (c) 2018 Nathan Jenne
+ */
 
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;

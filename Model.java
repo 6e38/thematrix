@@ -1,3 +1,6 @@
+/*
+ * Copyright (c) 2018 Nathan Jenne
+ */
 
 public class Model
 {

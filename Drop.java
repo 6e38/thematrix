@@ -1,3 +1,6 @@
+/*
+ * Copyright (c) 2018 Nathan Jenne
+ */
 
 import java.io.BufferedReader;
 import java.io.File;
